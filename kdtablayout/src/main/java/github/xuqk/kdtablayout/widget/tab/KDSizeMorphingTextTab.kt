@@ -8,7 +8,7 @@ import android.graphics.Typeface
 import androidx.annotation.ColorInt
 import github.xuqk.kdtablayout.dpToPx
 import github.xuqk.kdtablayout.getBaselineToCenter
-import github.xuqk.kdtablayout.widget.KDBaseTab
+import github.xuqk.kdtablayout.widget.KDTab
 import kotlin.math.max
 
 /**
@@ -19,7 +19,7 @@ import kotlin.math.max
  */
 @SuppressLint("ViewConstructor")
 open class KDSizeMorphingTextTab(context: Context, protected val text: String) :
-    KDBaseTab(context) {
+    KDTab(context) {
 
     protected val fontMetrics = Paint.FontMetrics()
 
@@ -57,6 +57,7 @@ open class KDSizeMorphingTextTab(context: Context, protected val text: String) :
     override fun selectTab() {
         bold = selectedBold
         textSize = selectedTextSize
+        textColor = selectedTextColor
     }
 
     /**
@@ -65,6 +66,7 @@ open class KDSizeMorphingTextTab(context: Context, protected val text: String) :
     override fun reset() {
         bold = false
         textSize = normalTextSize
+        textColor = normalTextColor
     }
 
     override fun computeContentBounds() {

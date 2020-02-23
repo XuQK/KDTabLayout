@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#cfd8dc">
+
+    <github.xuqk.kdtablayout.KDTabLayout
+        android:id="@+id/tab0"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="6dp"
+        android:background="#fff"/>
+
+    <github.xuqk.kdtablayout.KDTabLayout
+        android:id="@+id/tab1"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="6dp"
+        android:background="#fff"/>
+
+    <github.xuqk.kdtablayout.KDTabLayout
+        android:id="@+id/tab2"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="6dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/bg_round_stroke_r24"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

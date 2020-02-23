@@ -1,7 +1,7 @@
 package github.xuqk.kdtablayout
 
+import github.xuqk.kdtablayout.widget.KDTab
 import github.xuqk.kdtablayout.widget.KDTabIndicator
-import github.xuqk.kdtablayout.widget.KDBaseTab
 
 /**
  * Created By：XuQK
@@ -14,7 +14,7 @@ abstract class KDTabAdapter {
     /**
      * 创建对应位置的Tab，如果不需要Tab展示，返回null即可
      */
-    open fun createTab(position: Int): KDBaseTab? {
+    open fun createTab(position: Int): KDTab? {
         return null
     }
 

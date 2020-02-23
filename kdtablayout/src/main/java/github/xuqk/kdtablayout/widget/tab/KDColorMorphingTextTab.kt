@@ -20,14 +20,4 @@ open class KDColorMorphingTextTab(context: Context, text: String) :
         super.onScrolling(selectedFraction, selectedInLeft)
         textColor = hsvEvaluator.evaluate(selectedFraction, normalTextColor, selectedTextColor)
     }
-
-    override fun selectTab() {
-        super.selectTab()
-        textColor = selectedTextColor
-    }
-
-    override fun reset() {
-        super.reset()
-        textColor = normalTextColor
-    }
 }

@@ -17,6 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ScrollableTabActivity"/>
+        <activity android:name=".FixedTabActivity"/>
+        <activity android:name=".DynamicTabActivity"/>
+        <activity android:name=".OnlyIndicatorActivity"/>
+        <activity android:name=".BadgeTabActivity"/>
     </application>
 
 </manifest>

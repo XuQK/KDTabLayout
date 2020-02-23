@@ -1,14 +1,17 @@
 package github.xuqk.kdtablayout.widget.indicator
 
-import android.graphics.*
-import android.view.animation.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.RectF
 import android.view.animation.Interpolator
+import android.view.animation.LinearInterpolator
 import androidx.annotation.ColorInt
 import androidx.annotation.Px
 import github.xuqk.kdtablayout.KDTabLayout
 import github.xuqk.kdtablayout.dpToPx
+import github.xuqk.kdtablayout.widget.KDTab
 import github.xuqk.kdtablayout.widget.KDTabIndicator
-import github.xuqk.kdtablayout.widget.KDBaseTab
 
 /**
  * Created By：XuQK
@@ -16,7 +19,7 @@ import github.xuqk.kdtablayout.widget.KDBaseTab
  * Creator Email：xuqiankun66@gmail.com
  * Description：矩形Indicator
  */
-class KDRecIndicator(private val tabLayout: KDTabLayout) : KDTabIndicator() {
+class KDRecIndicator(tabLayout: KDTabLayout) : KDTabIndicator(tabLayout) {
 
     companion object {
         /**
@@ -116,13 +119,13 @@ class KDRecIndicator(private val tabLayout: KDTabLayout) : KDTabIndicator() {
         onTabScrolled(tabLayout.currentItem, tabLayout.currentItem, 0f)
     }
 
-    override fun onTabScrolled(startItem: Int, endItem: Int, fraction: Float) {
+    override fun onTabScrolled(startItem: Int, endItem: Int, scrolledFraction: Float) {
         val fractionToRight: Float = if (endItem > startItem) {
             // 滚向右边
-            fraction
+            scrolledFraction
         } else {
             // 滚向左边
-            1 - fraction
+            1 - scrolledFraction
         }
 
         val leftX: Int
@@ -158,16 +161,16 @@ class KDRecIndicator(private val tabLayout: KDTabLayout) : KDTabIndicator() {
                 }
             }
         } else {
-            val leftTab: KDBaseTab
-            val rightTab: KDBaseTab
+            val leftTab: KDTab
+            val rightTab: KDTab
             if (endItem > startItem) {
                 // 滚向右边
-                leftTab = tabLayout.getChildAt(startItem) as KDBaseTab
-                rightTab = tabLayout.getChildAt(endItem) as KDBaseTab
+                leftTab = tabLayout.getChildAt(startItem) as KDTab
+                rightTab = tabLayout.getChildAt(endItem) as KDTab
             } else {
                 // 滚向左边
-                leftTab = tabLayout.getChildAt(endItem) as KDBaseTab
-                rightTab = tabLayout.getChildAt(startItem) as KDBaseTab
+                leftTab = tabLayout.getChildAt(endItem) as KDTab
+                rightTab = tabLayout.getChildAt(startItem) as KDTab
             }
 
             when (mode) {
@@ -210,6 +213,10 @@ class KDRecIndicator(private val tabLayout: KDTabLayout) : KDTabIndicator() {
     }
 
     override fun getWidth(): Int {
-        return (indicatorWidth + marginHorizontal * 2).toInt()
+        return ((indicatorWidth + marginHorizontal * 2) * tabLayout.contentAdapter!!.getTabCount()).toInt()
+    }
+
+    override fun getHeight(): Int {
+        return indicatorHeight.toInt()
     }
 }

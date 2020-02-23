@@ -1,9 +1,10 @@
 package github.xuqk.kdtablayout.widget
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Rect
 import android.view.View
-import github.xuqk.kdtablayout.widget.KDTabBadge
 
 /**
  * Created By：XuQK
@@ -11,7 +12,7 @@ import github.xuqk.kdtablayout.widget.KDTabBadge
  * Creator Email：xuqiankun66@gmail.com
  * Description：
  */
-abstract class KDBaseTab(
+abstract class KDTab(
     context: Context) : View(context) {
 
     protected val paint = Paint(Paint.ANTI_ALIAS_FLAG)

@@ -1,66 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <github.xuqk.kdtablayout.KDTabLayout
-        android:id="@+id/tab"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:background="@android:color/holo_blue_light"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-    </github.xuqk.kdtablayout.KDTabLayout>
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/vp2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/tab"
-        app:layout_constraintBottom_toTopOf="@id/vp"/>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/vp2"
-        app:layout_constraintBottom_toTopOf="@id/ll"/>
-
-    <LinearLayout
-        android:id="@+id/ll"
+    <Button
+        android:id="@+id/btn_scrollable_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/vp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:text="Scrollable Tab"/>
 
-        <Button
-            android:id="@+id/btn0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"/>
+    <Button
+        android:id="@+id/btn_fixed_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="fixed Tab"/>
 
-        <Button
-            android:id="@+id/btn1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1"/>
+    <Button
+        android:id="@+id/btn_dynamic_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dynamic Tab"/>
 
-        <Button
-            android:id="@+id/btn2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2"/>
+    <Button
+        android:id="@+id/btn_only_indicator_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Only Indicator Tab"/>
 
-        <Button
-            android:id="@+id/btn3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3"/>
+    <Button
+        android:id="@+id/btn_badge_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Badge Tab"/>
 
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

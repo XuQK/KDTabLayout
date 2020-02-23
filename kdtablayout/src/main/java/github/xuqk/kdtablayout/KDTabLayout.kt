@@ -10,9 +10,10 @@ import android.widget.OverScroller
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
+import github.xuqk.kdtablayout.widget.KDTab
 import github.xuqk.kdtablayout.widget.KDTabIndicator
-import github.xuqk.kdtablayout.widget.KDBaseTab
 import kotlin.math.abs
+import kotlin.math.max
 
 
 /**
@@ -72,7 +73,7 @@ class KDTabLayout @JvmOverloads constructor(
     private var lastX: Float = 0f
 
     private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
-    private val overScrollDistance = github.xuqk.kdtablayout.dpToPx(context, 16f)
+    private val overScrollDistance = dpToPx(context, 16f)
     private val scroller = OverScroller(context)
     private var velocityTracker: VelocityTracker? = null
     private val minVelocity = ViewConfiguration.get(context).scaledMinimumFlingVelocity
@@ -82,11 +83,10 @@ class KDTabLayout @JvmOverloads constructor(
      */
     var scrollBiasX: Float = 0f
         set(value) {
-            field = github.xuqk.kdtablayout.dpToPx(context, value).toFloat()
+            field = dpToPx(context, value).toFloat()
         }
-    var tabMode: Int =
-        TAB_MODE_FLEXIBLE
-    var contentAdapter: github.xuqk.kdtablayout.KDTabAdapter? = null
+    var tabMode: Int = TAB_MODE_FLEXIBLE
+    var contentAdapter: KDTabAdapter? = null
         set(value) {
             field = value
             init()
@@ -125,7 +125,7 @@ class KDTabLayout @JvmOverloads constructor(
             smoothScrollToItem(position)
         } else {
             scrollTo(destX)
-            updateTabState()
+            updateTabState(position)
         }
 
         currentItem = position
@@ -172,19 +172,22 @@ class KDTabLayout @JvmOverloads constructor(
                     // 同步indicator状态
                     syncIndicatorScrollState(currentItem, position, it.animatedFraction)
                 } else {
-                    updateTabState()
+                    updateTabState(position)
                 }
             }
             start()
         }
     }
 
-    private fun init() {
+    fun init() {
         contentAdapter?.let { adapter ->
             if (adapter.getTabCount() <= 0) {
                 throw IllegalArgumentException("数量必须大于0")
             }
             removeAllViews()
+            if (currentItem > adapter.getTabCount() - 1) {
+                currentItem = adapter.getTabCount() - 1
+            }
             (0 until adapter.getTabCount()).forEach { i ->
                 adapter.createTab(i)?.let {
                     if (i == currentItem) {
@@ -212,6 +215,10 @@ class KDTabLayout @JvmOverloads constructor(
 
             indicator?.init()
         }
+    }
+
+    fun getTab(position: Int): KDTab? {
+        return getChildAt(position) as? KDTab
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -328,16 +335,20 @@ class KDTabLayout @JvmOverloads constructor(
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
         totalWidth = 0
+        var totalHeight = 0
         if (childCount == 0) {
             // 没有tab的情况，TabLayout内容宽度与布局宽度一致
-            totalWidth = (indicator?.getWidth() ?: 0) * (contentAdapter?.getTabCount() ?: 0)
+            totalWidth = indicator?.getWidth() ?: 0
+            totalHeight = indicator?.getHeight() ?: 0
         } else {
             var totalWeight = 0
             for (i in 0 until childCount) {
                 val child = getChildAt(i)
                 measureChild(child, widthMeasureSpec, heightMeasureSpec)
+
                 totalWidth += child.measuredWidth
-                totalWeight += (child as KDBaseTab).weight
+                totalHeight = max(totalHeight, child.height)
+                totalWeight += (child as KDTab).weight
             }
 
             when (tabMode) {
@@ -352,7 +363,7 @@ class KDTabLayout @JvmOverloads constructor(
                         val child = getChildAt(i)
                         child.measure(
                             MeasureSpec.makeMeasureSpec(
-                                totalWidth * (child as KDBaseTab).weight / totalWeight,
+                                totalWidth * (child as KDTab).weight / totalWeight,
                                 MeasureSpec.EXACTLY
                             ),
                             MeasureSpec.makeMeasureSpec(measuredHeight, MeasureSpec.AT_MOST)
@@ -367,7 +378,7 @@ class KDTabLayout @JvmOverloads constructor(
                             val child = getChildAt(i)
                             child.measure(
                                 MeasureSpec.makeMeasureSpec(
-                                    totalWidth * (child as KDBaseTab).weight / totalWeight,
+                                    totalWidth * (child as KDTab).weight / totalWeight,
                                     MeasureSpec.EXACTLY
                                 ),
                                 MeasureSpec.makeMeasureSpec(measuredHeight, MeasureSpec.AT_MOST)
@@ -382,23 +393,43 @@ class KDTabLayout @JvmOverloads constructor(
         }
 
         setMeasuredDimension(View.resolveSizeAndState(totalWidth, widthMeasureSpec, 0),
-            heightMeasureSpec)
+            View.resolveSizeAndState(totalHeight, heightMeasureSpec, 0))
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-        if (changed) {
-            var width = 0
-            if (tabMode == TAB_MODE_PACK) {
-                width = (r - l - totalWidth) / 2
-            }
-            for (i in 0 until childCount) {
-                val child = getChildAt(i)
-                child.layout(width, 0, width + child.measuredWidth, child.measuredHeight)
-                width += child.measuredWidth
-            }
-            scrollable = r - l < width
-            indicator?.init()
+        var width = 0
+        if (tabMode == TAB_MODE_PACK) {
+            width = (r - l - totalWidth) / 2
         }
+        for (i in 0 until childCount) {
+            val child = getChildAt(i)
+            child.layout(width, 0, width + child.measuredWidth, child.measuredHeight)
+            width += child.measuredWidth
+        }
+        scrollable = r - l < width
+        indicator?.init()
+
+        val destX = getTabScrollXInCenter(getChildAt(currentItem))
+
+        scrollTo(destX)
+        updateTabState(currentItem)
+
+
+
+//        val startTab: View? = getChildAt(currentItem)
+//        val endTab: View? = getChildAt(currentItem)
+//
+//        if (startTab != null && endTab != null) {
+//
+//            // 整个TabLayout同步滚动
+//            syncLayoutScrollX(startTab, endTab, 0f)
+//
+//            // 将当前滚动参数同步给关联到的两个tab
+//            syncTabScrollState(startTab, endTab, 0f)
+//        }
+//
+//        // 将滚动状态同步给indicator
+//        syncIndicatorScrollState(currentItem, currentItem, 0f)
     }
 
     override fun onScrolling(scrollFraction: Float, startItem: Int, endItem: Int) {
@@ -420,20 +451,20 @@ class KDTabLayout @JvmOverloads constructor(
 
     override fun onScrollStateChanged(state: Int) {
         when (state) {
-            SCROLL_STATE_IDLE -> updateTabState()
+            SCROLL_STATE_IDLE -> updateTabState(currentItem)
             SCROLL_STATE_DRAGGING -> tabChangeAnimator?.cancel()
         }
 
         scrollState = state
     }
 
-    private fun updateTabState() {
+    private fun updateTabState(currentItem: Int) {
         for (i in 0 until childCount) {
             val child = getChildAt(i)
             if (i == currentItem) {
-                (child as KDBaseTab).selectTab()
+                (child as KDTab).selectTab()
             } else {
-                (child as KDBaseTab).reset()
+                (child as KDTab).reset()
             }
             child.invalidate()
         }
@@ -443,9 +474,9 @@ class KDTabLayout @JvmOverloads constructor(
         for (i in 0 until childCount) {
             val child = getChildAt(i)
             when (child) {
-                startTab -> (child as KDBaseTab).onScrolling(1 - fraction, startTab.left > endTab.left)
-                endTab -> (child as KDBaseTab).onScrolling(fraction, startTab.left < endTab.left)
-                else -> (child as KDBaseTab).reset()
+                startTab -> (child as KDTab).onScrolling(1 - fraction, startTab.left > endTab.left)
+                endTab -> (child as KDTab).onScrolling(fraction, startTab.left < endTab.left)
+                else -> (child as KDTab).reset()
             }
             child.invalidate()
         }
@@ -463,10 +494,10 @@ class KDTabLayout @JvmOverloads constructor(
     /**
      * 根据滚动的两个tab和滚动进程，将tabLayout同步滚动
      */
-    private fun syncLayoutScrollX(currentTab: View, nextTab: View, fraction: Float) {
+    private fun syncLayoutScrollX(startTab: View, endTab: View, fraction: Float) {
         if (scrollable) {
-            val startScrollX = getTabScrollXInCenter(currentTab)
-            val endScrollX = getTabScrollXInCenter(nextTab)
+            val startScrollX = getTabScrollXInCenter(startTab)
+            val endScrollX = getTabScrollXInCenter(endTab)
             scrollTo(startScrollX + ((endScrollX - startScrollX) * fraction).toInt())
         }
     }
@@ -474,7 +505,11 @@ class KDTabLayout @JvmOverloads constructor(
     /**
      * tab在正中间时，整个tabLayout的scrollX值
      */
-    private fun getTabScrollXInCenter(tab: View): Int {
-        return tab.left - (width - tab.width) / 2 + scrollBiasX.toInt()
+    private fun getTabScrollXInCenter(tab: View?): Int {
+        return if (tab == null) {
+            0
+        } else {
+            tab.left - (width - tab.width) / 2 - scrollBiasX.toInt()
+        }
     }
 }

@@ -25,7 +25,7 @@ allprojects {
 
 ```gradle
 // 版本号参看Release
-implementation 'com.github.XuQK:KDImageViewer:versionCode'
+implementation 'com.github.XuQK:KDTabLayout:versionCode'
 
 // 项目依赖于以下库，如果没有需要在主工程中添加
 implementation 'androidx.appcompat:appcompat:versionCode'

@@ -1,0 +1,2 @@
+include ':app', ':kdtablayout'
+rootProject.name='Demo'

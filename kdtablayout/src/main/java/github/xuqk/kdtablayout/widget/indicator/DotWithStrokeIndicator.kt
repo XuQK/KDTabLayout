@@ -1,10 +1,9 @@
-package github.xuqk.kdtablayout.sample.widget
+package github.xuqk.kdtablayout.widget.indicator
 
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import github.xuqk.kdtablayout.KDTabLayout
-import github.xuqk.kdtablayout.sample.dpToPx
+import github.xuqk.kdtablayout.dpToPx
 import github.xuqk.kdtablayout.widget.KDTabIndicator
 
 /**
@@ -13,7 +12,7 @@ import github.xuqk.kdtablayout.widget.KDTabIndicator
  * Creator Email：xuqiankun66@gmail.com
  * Description：为了便于计算，让左右各有1/2 space的margin
  */
-class DotIndicator(tabLayout: KDTabLayout) : KDTabIndicator(tabLayout) {
+class DotWithStrokeIndicator(tabLayout: KDTabLayout) : KDTabIndicator(tabLayout) {
 
     var size: Float = dpToPx(tabLayout.context, 8f).toFloat()
         set(value) {

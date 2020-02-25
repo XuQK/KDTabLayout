@@ -36,29 +36,11 @@ class ScrollableTabActivity : AppCompatActivity() {
                     setOnClickListener {
                         vp2.currentItem = position
                     }
-
-//                    badge = KDContentEndRelativeBadge(this).apply {
-//                        count = position
-//                        showCount = true
-//                        size = 12f
-//                    }
                 }
             }
 
             override fun createIndicator(): KDTabIndicator? {
                 return null
-                return KDRecIndicator(tab0).apply {
-                    indicatorHeight = 70f
-                    color = 0x4cff0000
-                    marginBottom = 5f
-                    marginHorizontal = 14f
-                    paddingHorizontal = 14f
-                    cornerRadius = 5f
-                    mode = KDRecIndicator.MODE_EXACT
-                    indicatorWidth = 16f
-                    startInterpolator = AccelerateInterpolator()
-//                    endInterpolator = DecelerateInterpolator(2f)
-                }
             }
 
             override fun getTabCount(): Int {
@@ -76,29 +58,11 @@ class ScrollableTabActivity : AppCompatActivity() {
                     setOnClickListener {
                         vp2.currentItem = position
                     }
-
-//                    badge = KDContentEndRelativeBadge(this).apply {
-//                        count = position
-//                        showCount = true
-//                        size = 12f
-//                    }
                 }
             }
 
             override fun createIndicator(): KDTabIndicator? {
                 return null
-                return KDRecIndicator(tab1).apply {
-                    indicatorHeight = 70f
-                    color = 0x4cff0000
-                    marginBottom = 5f
-                    marginHorizontal = 14f
-                    paddingHorizontal = 14f
-                    cornerRadius = 5f
-                    mode = KDRecIndicator.MODE_EXACT
-                    indicatorWidth = 16f
-                    startInterpolator = AccelerateInterpolator()
-//                    endInterpolator = DecelerateInterpolator(2f)
-                }
             }
 
             override fun getTabCount(): Int {
@@ -112,17 +76,9 @@ class ScrollableTabActivity : AppCompatActivity() {
                     horizontalPadding = 16f
                     selectedTextColor = Color.parseColor("#ff5722")
                     normalTextColor = Color.parseColor("#9e9e9e")
-//                    selectedTextSize = 16f
-//                    normalTextSize = 16f
                     setOnClickListener {
                         vp2.currentItem = position
                     }
-
-//                    badge = KDContentEndRelativeBadge(this).apply {
-//                        count = position
-//                        showCount = true
-//                        size = 12f
-//                    }
                 }
             }
 
@@ -130,9 +86,6 @@ class ScrollableTabActivity : AppCompatActivity() {
                 return KDRecIndicator(tab2).apply {
                     indicatorHeight = 6f
                     color = 0xffff5722.toInt()
-//                    marginBottom = 5f
-//                    marginHorizontal = 14f
-//                    paddingHorizontal = 14f
                     cornerRadius = 3f
                     mode = KDRecIndicator.MODE_EXACT
                     indicatorWidth = 16f
@@ -153,17 +106,9 @@ class ScrollableTabActivity : AppCompatActivity() {
                     horizontalPadding = 16f
                     selectedTextColor = Color.parseColor("#ff5722")
                     normalTextColor = Color.BLACK
-//                    selectedTextSize = 16f
-//                    normalTextSize = 16f
                     setOnClickListener {
                         vp2.currentItem = position
                     }
-
-//                    badge = KDContentEndRelativeBadge(this).apply {
-//                        count = position
-//                        showCount = true
-//                        size = 12f
-//                    }
                 }
             }
 
@@ -172,13 +117,8 @@ class ScrollableTabActivity : AppCompatActivity() {
                     indicatorHeight = 36f
                     color = 0x4c03a9f4
                     marginBottom = 6f
-//                    marginHorizontal = 14f
-//                    paddingHorizontal = 14f
                     cornerRadius = 18f
                     mode = KDRecIndicator.MODE_MATCH
-//                    indicatorWidth = 16f
-//                    startInterpolator = AccelerateInterpolator()
-//                    endInterpolator = DecelerateInterpolator(2f)
                 }
             }
 
@@ -194,17 +134,9 @@ class ScrollableTabActivity : AppCompatActivity() {
                     horizontalPadding = 16f
                     selectedTextColor = Color.parseColor("#039be5")
                     normalTextColor = Color.parseColor("#9e9e9e")
-//                    selectedTextSize = 16f
-//                    normalTextSize = 16f
                     setOnClickListener {
                         vp2.currentItem = position
                     }
-
-//                    badge = KDContentEndRelativeBadge(this).apply {
-//                        count = position
-//                        showCount = true
-//                        size = 12f
-//                    }
                 }
             }
 
@@ -213,12 +145,7 @@ class ScrollableTabActivity : AppCompatActivity() {
                     indicatorHeight = 6f
                     color = 0xff039be5.toInt()
                     marginBottom = 42f
-//                    marginHorizontal = 14f
-//                    paddingHorizontal = 14f
-//                    cornerRadius = 18f
                     mode = KDRecIndicator.MODE_MATCH
-//                    indicatorWidth = 16f
-//                    startInterpolator = AccelerateInterpolator()
                     endInterpolator = DecelerateInterpolator(2f)
                 }
             }
@@ -234,17 +161,9 @@ class ScrollableTabActivity : AppCompatActivity() {
                     horizontalPadding = 16f
                     selectedTextColor = Color.parseColor("#673ab7")
                     normalTextColor = Color.parseColor("#9ccc65")
-//                    selectedTextSize = 16f
-//                    normalTextSize = 16f
                     setOnClickListener {
                         vp2.currentItem = position
                     }
-
-//                    badge = KDContentEndRelativeBadge(this).apply {
-//                        count = position
-//                        showCount = true
-//                        size = 12f
-//                    }
                 }
             }
 
@@ -252,14 +171,7 @@ class ScrollableTabActivity : AppCompatActivity() {
                 return KDRecIndicator(tab5).apply {
                     indicatorHeight = 6f
                     color = 0xff673ab7.toInt()
-//                    marginBottom = 42f
-//                    marginHorizontal = 14f
-//                    paddingHorizontal = 14f
-//                    cornerRadius = 18f
                     mode = KDRecIndicator.MODE_WRAP_CONTENT
-//                    indicatorWidth = 16f
-//                    startInterpolator = AccelerateInterpolator()
-//                    endInterpolator = DecelerateInterpolator(2f)
                 }
             }
 

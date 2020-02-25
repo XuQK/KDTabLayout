@@ -34,7 +34,6 @@ class BadgeTabActivity : AppCompatActivity() {
         tab0.contentAdapter = object : KDTabAdapter() {
             override fun createTab(position: Int): KDTab? {
                 return KDColorMorphingTextTab(this@BadgeTabActivity, data[position]).apply {
-                    //                    horizontalPadding = 16f
                     weight = position + 2
                     selectedTextColor = Color.parseColor("#ff5722")
                     normalTextColor = Color.parseColor("#9e9e9e")
@@ -59,13 +58,7 @@ class BadgeTabActivity : AppCompatActivity() {
                 return KDRecIndicator(tab0).apply {
                     indicatorHeight = 4f
                     color = 0xffff5722.toInt()
-//                    marginBottom = 42f
-//                    marginHorizontal = 14f
-//                    paddingHorizontal = 14f
-//                    cornerRadius = 18f
                     mode = KDRecIndicator.MODE_MATCH
-//                    indicatorWidth = 16f
-//                    startInterpolator = AccelerateInterpolator()
                     endInterpolator = DecelerateInterpolator(2f)
                 }
             }
@@ -82,9 +75,6 @@ class BadgeTabActivity : AppCompatActivity() {
                     horizontalPadding = 12f
                     selectedTextColor = Color.parseColor("#039be5")
                     normalTextColor = Color.parseColor("#9e9e9e")
-//                    selectedTextSize = 18f
-//                    normalTextSize = 14f
-//                    selectedBold = true
                     setOnClickListener {
                         vp2.currentItem = position
                         badge?.dismiss()
@@ -102,13 +92,7 @@ class BadgeTabActivity : AppCompatActivity() {
                 return KDRecIndicator(tab1).apply {
                     indicatorHeight = 4f
                     color = 0xff039be5.toInt()
-//                    marginBottom = 42f
-//                    marginHorizontal = 14f
-//                    paddingHorizontal = 14f
-//                    cornerRadius = 18f
                     mode = KDRecIndicator.MODE_MATCH
-//                    indicatorWidth = 16f
-//                    startInterpolator = AccelerateInterpolator()
                     endInterpolator = DecelerateInterpolator(2f)
                 }
             }

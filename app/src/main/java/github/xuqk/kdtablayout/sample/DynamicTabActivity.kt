@@ -38,28 +38,16 @@ class DynamicTabActivity : AppCompatActivity() {
                     setOnClickListener {
                         vp2.currentItem = position
                     }
-
-//                    badge = KDContentEndRelativeBadge(this).apply {
-//                        count = position
-//                        showCount = true
-//                        size = 12f
-//                    }
                 }
             }
 
             override fun createIndicator(): KDTabIndicator? {
-//                return null
                 return KDRecIndicator(tab).apply {
                     indicatorHeight = 4f
                     color = 0x4cff0000
                     marginBottom = 4f
-//                    marginHorizontal = 14f
-//                    paddingHorizontal = 14f
                     cornerRadius = 2f
                     mode = KDRecIndicator.MODE_MATCH
-//                    indicatorWidth = 16f
-//                    startInterpolator = AccelerateInterpolator()
-//                    endInterpolator = DecelerateInterpolator(2f)
                 }
             }
 

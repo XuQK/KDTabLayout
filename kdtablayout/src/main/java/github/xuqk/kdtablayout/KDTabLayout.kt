@@ -106,11 +106,13 @@ class KDTabLayout @JvmOverloads constructor(
     fun setViewPager(viewPager: ViewPager) {
         vpHelper.bindViewPager(viewPager)
         vpHelper.stateListener = this
+        updateTabState(viewPager.currentItem)
     }
 
     fun setViewPager2(viewPager2: ViewPager2) {
         vpHelper.bindViewPager2(viewPager2)
         vpHelper.stateListener = this
+        updateTabState(viewPager2.currentItem)
     }
 
     fun setCurrentItem(position: Int, smooth: Boolean = true) {

@@ -90,7 +90,6 @@ open class KDSizeMorphingTextTab(context: Context, protected val text: String) :
     }
 
     override fun drawContent(canvas: Canvas) {
-        paint.isFakeBoldText = true
         paint.textSize = dpToPx(context, textSize).toFloat()
         paint.color = textColor
         paint.typeface = if (bold) Typeface.DEFAULT_BOLD else Typeface.DEFAULT

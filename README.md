@@ -1,6 +1,6 @@
 [![](https://jitpack.io/v/XuQK/KDTabLayout.svg)](https://jitpack.io/#XuQK/KDTabLayout)
 
-一直感觉[MagicIndicator](https://github.com/hackware1993/MagicIndicator)这个库想当牛逼，在自己的工作过程中也帮我解决了很多问题，无奈作者志向高远，已经转行不写代码了，所以我参考了一下该库，自己撸了一个TabLayout。
+一直感觉[MagicIndicator](https://github.com/hackware1993/MagicIndicator)这个库相当牛逼，在自己的工作过程中也帮我解决了很多问题，无奈作者志向高远，已经转行不写代码了，所以我参考了一下该库，自己撸了一个TabLayout。
 
 本TabLayout直接继承自ViewGroup，默认实现了一些简单的效果，也留出了接口供用户自定义单个Tab，Indicator，Badge等控件，可以和ViewPager2和ViewPager搭配使用。
 

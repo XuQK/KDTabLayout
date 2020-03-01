@@ -21,6 +21,9 @@ abstract class KDTabIndicator(protected val tabLayout: KDTabLayout) {
      */
     abstract fun onTabScrolled(startItem: Int, endItem: Int, scrolledFraction: Float)
 
+    /**
+     * 绘制Indicator
+     */
     abstract fun draw(canvas: Canvas)
 
     /**

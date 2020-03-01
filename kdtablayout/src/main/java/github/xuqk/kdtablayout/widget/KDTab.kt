@@ -3,7 +3,6 @@ package github.xuqk.kdtablayout.widget
 import android.content.Context
 import android.graphics.*
 import android.view.View
-import github.xuqk.kdtablayout.KDTabLayout
 
 /**
  * Created By：XuQK
@@ -24,7 +23,7 @@ abstract class KDTab(
     /**
      * tab包含的badge，如果需要可以实现它
      */
-    var badge: KDTabBadge? = null
+    var badge: KDBadge? = null
     /**
      * 该tab在整个TabLayout中的宽度比例
      * 该参数只在KDTabLayout的tabMode为TAB_MODE_SPREAD或TAB_MODE_FLEXIBLE的非滚动模式下生效

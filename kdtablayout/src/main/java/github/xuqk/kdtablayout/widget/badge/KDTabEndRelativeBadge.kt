@@ -6,7 +6,6 @@ import androidx.annotation.Px
 import github.xuqk.kdtablayout.dpToPx
 import github.xuqk.kdtablayout.getBaselineToCenter
 import github.xuqk.kdtablayout.widget.KDTab
-import github.xuqk.kdtablayout.widget.KDTabBadge
 
 /**
  * Created By：XuQK
@@ -14,7 +13,7 @@ import github.xuqk.kdtablayout.widget.KDTabBadge
  * Creator Email：xuqiankun66@gmail.com
  * Description：tab的圆形指示badge，定位中心点为Tab的right和top
  */
-class KDTabEndRelativeBadge(tab: KDTab) : KDTabBadge(tab) {
+class KDTabEndRelativeBadge(tab: KDTab) : KDNumberBadge(tab) {
     /**
      * badge中心点离tab right的距离
      */

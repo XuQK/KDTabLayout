@@ -5,7 +5,6 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
-import android.util.Log
 import android.view.*
 import android.widget.OverScroller
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
@@ -56,11 +55,12 @@ class KDTabLayout @JvmOverloads constructor(
         const val TAB_MODE_PACK = 1
         /**
          * tab不可滚动，此时tab按比例均分整个TabLayout
+         * 此时Tab中的weight参数生效
          */
         const val TAB_MODE_SPREAD = 2
         /**
          * 自适应模式
-         * 所有tab原本总宽度如果没有超过TabLayout，就按MODE_TAB_SPREAD模式排列，
+         * 所有tab原本总宽度如果没有超过TabLayout，就按MODE_TAB_SPREAD模式排列，此时Tab中的weight参数生效
          * 若超过TabLayout总宽度，则按照MODE_TAB_SCROLLABLE排列
          */
         const val TAB_MODE_FLEXIBLE = 3
@@ -87,6 +87,13 @@ class KDTabLayout @JvmOverloads constructor(
             field = dpToPx(context, value).toFloat()
         }
     var tabMode: Int = TAB_MODE_FLEXIBLE
+    /**
+     * 为true，从tab2直接滚动到tab10，滚动开始后，会瞬间切到tab2，然后动画滚动到tab10，中间的tab也会对滚动进行响应
+     * 为false，从tab2直接滚动到tab10，滚动开始后，会从当前停留的点，直接动画滚动到tab10，中间的tab不会对滚动进行响应，变化只发生在tab2和tab10上
+
+     * 如果Tab数量很多且可滚动，建议将此项设置为false体验稍好一些
+     */
+    var needCompleteScroll: Boolean = false
     var contentAdapter: KDTabAdapter? = null
         set(value) {
             field = value
@@ -96,7 +103,7 @@ class KDTabLayout @JvmOverloads constructor(
     var currentItem: Int = 0
         private set
 
-    private var stopViewPagerAffect: Boolean = false
+    private var stopViewPagerAffect: Boolean = true
     private var indicator: KDTabIndicator? = null
     private var tabChangeAnimator: ValueAnimator? = null
 
@@ -106,12 +113,14 @@ class KDTabLayout @JvmOverloads constructor(
         SCROLL_STATE_IDLE
 
     fun setViewPager(viewPager: ViewPager) {
+        stopViewPagerAffect = false
         vpHelper.bindViewPager(viewPager)
         vpHelper.stateListener = this
         updateTabState(viewPager.currentItem)
     }
 
     fun setViewPager2(viewPager2: ViewPager2) {
+        stopViewPagerAffect = false
         vpHelper.bindViewPager2(viewPager2)
         vpHelper.stateListener = this
         updateTabState(viewPager2.currentItem)
@@ -158,14 +167,11 @@ class KDTabLayout @JvmOverloads constructor(
 
                 override fun onAnimationEnd(animation: Animator?) {
                     scrollState = SCROLL_STATE_IDLE
-                    Log.d("这里调用", "yy")
                     updateTabState(currentItem)
                 }
 
                 override fun onAnimationCancel(animation: Animator?) {
                     scrollState = SCROLL_STATE_IDLE
-                    Log.d("还是这里调用", "yy")
-//                    updateTabState(currentItem)
                 }
 
                 override fun onAnimationStart(animation: Animator?) {
@@ -459,8 +465,10 @@ class KDTabLayout @JvmOverloads constructor(
                     // 表明是用户拖动ViewPager导致的状态变化
                 } else if (scrollState == SCROLL_STATE_IDLE) {
                     // 表明是直接调用ViewPager.setCurrentItem方法导致的状态变化
-                    // 此时要禁止ViewPager滚动对Tab的影响，使用Tab自身的滚动方法来进行状态变化
-                    stopViewPagerAffect = true
+                    // 此时如果不需要完全滚动，就要禁止ViewPager滚动对Tab的影响，使用Tab自身的滚动方法来进行状态变化
+                    if (!needCompleteScroll) {
+                        stopViewPagerAffect = true
+                    }
                 }
             }
         }

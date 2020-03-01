@@ -1,4 +1,4 @@
-package github.xuqk.kdtablayout.widget
+package github.xuqk.kdtablayout.widget.badge
 
 import android.animation.ValueAnimator
 import android.graphics.Canvas
@@ -7,6 +7,8 @@ import android.graphics.Paint
 import androidx.annotation.ColorInt
 import androidx.annotation.Px
 import github.xuqk.kdtablayout.dpToPx
+import github.xuqk.kdtablayout.widget.KDBadge
+import github.xuqk.kdtablayout.widget.KDTab
 
 /**
  * Created By：XuQK
@@ -14,8 +16,7 @@ import github.xuqk.kdtablayout.dpToPx
  * Creator Email：xuqiankun66@gmail.com
  * Description：
  */
-abstract class KDTabBadge(protected val tab: KDTab) {
-    protected var show: Boolean = true
+abstract class KDNumberBadge(tab: KDTab) : KDBadge(tab) {
     protected val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     protected val fontMetrics = Paint.FontMetrics()
 
@@ -52,7 +53,7 @@ abstract class KDTabBadge(protected val tab: KDTab) {
             field = dpToPx(tab.context, value).toFloat()
         }
 
-    open fun dismiss() {
+    override fun dismiss() {
         if (!show) return
         animator?.cancel()
         animator = ValueAnimator.ofFloat(1f, 0f).apply {
@@ -68,10 +69,8 @@ abstract class KDTabBadge(protected val tab: KDTab) {
         }
     }
 
-    open fun show() {
+    override fun show() {
         show = true
         tab.invalidate()
     }
-
-    abstract fun draw(canvas: Canvas)
 }

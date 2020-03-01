@@ -1,6 +1,5 @@
 package github.xuqk.kdtablayout
 
-import android.util.Log
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 

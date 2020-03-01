@@ -6,6 +6,7 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import github.xuqk.kdtablayout.KDTabAdapter
+import github.xuqk.kdtablayout.KDTabLayout
 import github.xuqk.kdtablayout.sample.adapter.ViewPager2Adapter
 import github.xuqk.kdtablayout.widget.KDTab
 import github.xuqk.kdtablayout.widget.KDTabIndicator
@@ -100,6 +101,7 @@ class ScrollableTabActivity : AppCompatActivity() {
         }
 
         tab3.scrollBiasX = 50f
+        tab3.needCompleteScroll = true
         tab3.contentAdapter = object : KDTabAdapter() {
             override fun createTab(position: Int): KDTab? {
                 return KDColorMorphingTextTab(this@ScrollableTabActivity, ZH[position]).apply {

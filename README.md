@@ -27,8 +27,6 @@ allprojects {
 // 版本号参看Release
 implementation 'com.github.XuQK:KDTabLayout:versionCode'
 
-// 项目依赖于以下库，如果没有需要在主工程中添加
-implementation 'androidx.appcompat:appcompat:versionCode'
 // 如果要使用ViewPager2，请添加ViewPager2库
 implementation 'androidx.viewpager2:viewpager2:versionCode'
 ```
@@ -42,7 +40,8 @@ implementation 'androidx.viewpager2:viewpager2:versionCode'
 2. 为KDTabLayout配置Adapter
 
 ```kotlin
-// KDTabLayout本身主要有tabMode和scrollBiasX两个属性可设置，具体见类field注释
+// KDTabLayout本身主要有tabMode和scrollBiasX两个属性可设置，具体见类field注释，默认是TAB_MODE_FLEXIBLE
+tab2.tabMode = KDTabLayout.TAB_MODE_SCROLLABLE
 tabLayout.contentAdapter = object : KDTabAdapter() {
     override fun createTab(position: Int): KDTab? {
         // 如果该方法返回null，则TabLayout只会绘制Indicator

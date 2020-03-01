@@ -1,5 +1,6 @@
 package github.xuqk.kdtablayout
 
+import android.util.Log
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 
@@ -35,7 +36,7 @@ class KDViewPagerHelper {
     }
 
     fun onPageSelected(position: Int) {
-
+        stateListener?.onTabSelected(position)
     }
 
     fun onPageScrollStateChanged(state: Int) {
@@ -49,7 +50,6 @@ class KDViewPagerHelper {
                 positionOffset: Float,
                 positionOffsetPixels: Int
             ) {
-
                 this@KDViewPagerHelper.onPageScrolled(position, positionOffset, positionOffsetPixels)
             }
 
@@ -97,5 +97,7 @@ class KDViewPagerHelper {
          * 滚动状态变化
          */
         fun onScrollStateChanged(state: Int)
+
+        fun onTabSelected(position: Int)
     }
 }

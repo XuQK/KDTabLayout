@@ -23,6 +23,7 @@
         <activity android:name=".DynamicTabActivity"/>
         <activity android:name=".OnlyIndicatorActivity"/>
         <activity android:name=".BadgeTabActivity"/>
+        <activity android:name=".CustomTabActivity"/>
     </application>
 
 </manifest>

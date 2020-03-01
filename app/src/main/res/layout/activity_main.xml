@@ -37,4 +37,10 @@
         android:layout_height="wrap_content"
         android:text="Badge Tab"/>
 
+    <Button
+        android:id="@+id/btn_custom_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Custom tab"/>
+
 </LinearLayout>

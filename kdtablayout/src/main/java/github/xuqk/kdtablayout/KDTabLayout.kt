@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
+import android.util.Log
 import android.view.*
 import android.widget.OverScroller
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
@@ -95,6 +96,7 @@ class KDTabLayout @JvmOverloads constructor(
     var currentItem: Int = 0
         private set
 
+    private var stopViewPagerAffect: Boolean = false
     private var indicator: KDTabIndicator? = null
     private var tabChangeAnimator: ValueAnimator? = null
 
@@ -134,31 +136,40 @@ class KDTabLayout @JvmOverloads constructor(
     }
 
     private fun smoothScrollToItem(position: Int) {
-        val startTab = getChildAt(currentItem)
+        if (tabChangeAnimator?.isRunning == true) {
+            tabChangeAnimator?.cancel()
+            updateTabState(currentItem)
+        }
+
+        // 在该方法作用域里用来记录startPosition
+        val tempStartPosition = currentItem
+        currentItem = position
+
+        val startTab = getChildAt(tempStartPosition)
         val endTab = getChildAt(position)
 
         val startScrollX = scrollX
-        tabChangeAnimator?.cancel()
+
         tabChangeAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
-            duration =
-                DEFAULT_DURATION
+            duration = DEFAULT_DURATION
             interpolator = LinearOutSlowInInterpolator()
             addListener(object : Animator.AnimatorListener {
                 override fun onAnimationRepeat(animation: Animator?) {}
 
                 override fun onAnimationEnd(animation: Animator?) {
-                    scrollState =
-                        SCROLL_STATE_IDLE
+                    scrollState = SCROLL_STATE_IDLE
+                    Log.d("这里调用", "yy")
+                    updateTabState(currentItem)
                 }
 
                 override fun onAnimationCancel(animation: Animator?) {
-                    scrollState =
-                        SCROLL_STATE_IDLE
+                    scrollState = SCROLL_STATE_IDLE
+                    Log.d("还是这里调用", "yy")
+//                    updateTabState(currentItem)
                 }
 
                 override fun onAnimationStart(animation: Animator?) {
-                    scrollState =
-                        SCROLL_STATE_SETTLING
+                    scrollState = SCROLL_STATE_SETTLING
                 }
             })
 
@@ -172,9 +183,7 @@ class KDTabLayout @JvmOverloads constructor(
                     scrollTo(startScrollX + ((endScrollX - startScrollX) * it.animatedFraction).toInt())
 
                     // 同步indicator状态
-                    syncIndicatorScrollState(currentItem, position, it.animatedFraction)
-                } else {
-                    updateTabState(position)
+                    syncIndicatorScrollState(tempStartPosition, position, it.animatedFraction)
                 }
             }
             start()
@@ -415,26 +424,10 @@ class KDTabLayout @JvmOverloads constructor(
 
         scrollTo(destX)
         updateTabState(currentItem)
-
-
-
-//        val startTab: View? = getChildAt(currentItem)
-//        val endTab: View? = getChildAt(currentItem)
-//
-//        if (startTab != null && endTab != null) {
-//
-//            // 整个TabLayout同步滚动
-//            syncLayoutScrollX(startTab, endTab, 0f)
-//
-//            // 将当前滚动参数同步给关联到的两个tab
-//            syncTabScrollState(startTab, endTab, 0f)
-//        }
-//
-//        // 将滚动状态同步给indicator
-//        syncIndicatorScrollState(currentItem, currentItem, 0f)
     }
 
     override fun onScrolling(scrollFraction: Float, startItem: Int, endItem: Int) {
+        if (stopViewPagerAffect) return
         val startTab: View? = getChildAt(startItem)
         val endTab: View? = getChildAt(endItem)
 
@@ -453,11 +446,33 @@ class KDTabLayout @JvmOverloads constructor(
 
     override fun onScrollStateChanged(state: Int) {
         when (state) {
-            SCROLL_STATE_IDLE -> updateTabState(currentItem)
+            SCROLL_STATE_IDLE -> {
+                if (stopViewPagerAffect) {
+                    stopViewPagerAffect = false
+                } else {
+                    updateTabState(currentItem)
+                }
+            }
             SCROLL_STATE_DRAGGING -> tabChangeAnimator?.cancel()
+            SCROLL_STATE_SETTLING -> {
+                if (scrollState == SCROLL_STATE_DRAGGING) {
+                    // 表明是用户拖动ViewPager导致的状态变化
+                } else if (scrollState == SCROLL_STATE_IDLE) {
+                    // 表明是直接调用ViewPager.setCurrentItem方法导致的状态变化
+                    // 此时要禁止ViewPager滚动对Tab的影响，使用Tab自身的滚动方法来进行状态变化
+                    stopViewPagerAffect = true
+                }
+            }
         }
 
         scrollState = state
+    }
+
+    override fun onTabSelected(position: Int) {
+        // 只有在禁止ViewPager滚动对Tab滚动的影响的时候，才需要调用Tab自身的滚动方法
+        if (stopViewPagerAffect) {
+            smoothScrollToItem(position)
+        }
     }
 
     private fun updateTabState(currentItem: Int) {
@@ -470,6 +485,7 @@ class KDTabLayout @JvmOverloads constructor(
             }
             child.invalidate()
         }
+        this.currentItem = currentItem
     }
 
     private fun syncTabScrollState(startTab: View, endTab: View, fraction: Float) {

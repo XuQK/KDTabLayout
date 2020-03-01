@@ -40,6 +40,12 @@ class MainActivity : AppCompatActivity() {
                 Intent(this, BadgeTabActivity::class.java)
             )
         }
+
+        btn_custom_tab.setOnClickListener {
+            startActivity(
+                Intent(this, CustomTabActivity::class.java)
+            )
+        }
     }
 }
 

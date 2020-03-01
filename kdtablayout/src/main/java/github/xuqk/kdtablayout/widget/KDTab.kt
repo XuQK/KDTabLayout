@@ -1,9 +1,7 @@
 package github.xuqk.kdtablayout.widget
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Rect
+import android.graphics.*
 import android.view.View
 
 /**

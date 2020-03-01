@@ -29,13 +29,13 @@ open class KDSizeMorphingTextTab(context: Context, protected val text: String) :
     /**单位dp*/
     var normalTextSize: Float = 16f
     var selectedBold: Boolean = false
+    @ColorInt
     var selectedTextColor: Int = 0xFFFFFFFF.toInt()
-    @field:ColorInt
+    @ColorInt
     var normalTextColor: Int = 0x4CFFFFFF
     // ------供用户自定义的属性 END
 
     protected var textSize: Float = normalTextSize
-    @field:ColorInt
     protected var textColor: Int = selectedTextColor
     protected var bold: Boolean = false
 
@@ -90,6 +90,7 @@ open class KDSizeMorphingTextTab(context: Context, protected val text: String) :
     }
 
     override fun drawContent(canvas: Canvas) {
+        paint.reset()
         paint.textSize = dpToPx(context, textSize).toFloat()
         paint.color = textColor
         paint.typeface = if (bold) Typeface.DEFAULT_BOLD else Typeface.DEFAULT

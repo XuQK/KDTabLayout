@@ -425,11 +425,6 @@ class KDTabLayout @JvmOverloads constructor(
         }
         scrollable = r - l < width
         indicator?.init()
-
-        val destX = getTabScrollXInCenter(getChildAt(currentItem))
-
-        scrollTo(destX)
-        updateTabState(currentItem)
     }
 
     override fun onScrolling(scrollFraction: Float, startItem: Int, endItem: Int) {

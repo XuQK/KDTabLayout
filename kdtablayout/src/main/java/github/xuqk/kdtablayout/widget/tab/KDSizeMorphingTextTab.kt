@@ -5,6 +5,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Typeface
+import android.graphics.fonts.FontFamily
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import github.xuqk.kdtablayout.dpToPx
 import github.xuqk.kdtablayout.getBaselineToCenter
@@ -91,6 +93,7 @@ open class KDSizeMorphingTextTab(context: Context, protected val text: String) :
 
     override fun drawContent(canvas: Canvas) {
         paint.reset()
+        paint.isAntiAlias = true
         paint.textSize = dpToPx(context, textSize).toFloat()
         paint.color = textColor
         paint.typeface = if (bold) Typeface.DEFAULT_BOLD else Typeface.DEFAULT

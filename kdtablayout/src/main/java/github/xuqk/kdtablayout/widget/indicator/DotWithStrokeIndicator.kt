@@ -69,6 +69,7 @@ class DotWithStrokeIndicator(tabLayout: KDTabLayout) : KDTabIndicator(tabLayout)
 
     override fun draw(canvas: Canvas) {
         paint.reset()
+        paint.isAntiAlias = true
         paint.color = color
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = strokeWidth
@@ -77,6 +78,7 @@ class DotWithStrokeIndicator(tabLayout: KDTabLayout) : KDTabIndicator(tabLayout)
         }
 
         paint.reset()
+        paint.isAntiAlias = true
         paint.color = color
         canvas.drawCircle(
             currentDotX,

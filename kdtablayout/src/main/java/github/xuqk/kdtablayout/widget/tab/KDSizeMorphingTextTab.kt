@@ -8,6 +8,7 @@ import android.graphics.Typeface
 import android.graphics.fonts.FontFamily
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import github.xuqk.kdtablayout.KDTabLayout
 import github.xuqk.kdtablayout.dpToPx
 import github.xuqk.kdtablayout.getBaselineToCenter
 import github.xuqk.kdtablayout.widget.KDTab
@@ -20,7 +21,7 @@ import kotlin.math.max
  * Description：
  */
 @SuppressLint("ViewConstructor")
-open class KDSizeMorphingTextTab(context: Context, protected val text: String) :
+open class KDSizeMorphingTextTab(context: Context, text: String) :
     KDTab(context) {
 
     protected val fontMetrics = Paint.FontMetrics()
@@ -40,6 +41,18 @@ open class KDSizeMorphingTextTab(context: Context, protected val text: String) :
     protected var textSize: Float = normalTextSize
     protected var textColor: Int = selectedTextColor
     protected var bold: Boolean = false
+
+    var text: String = ""
+        set(value) {
+            if (field != value) {
+                field = value
+                requestLayout()
+            }
+        }
+
+    init {
+        this.text = text
+    }
 
     /**
      * Tab滚动中

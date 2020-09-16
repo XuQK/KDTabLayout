@@ -47,7 +47,8 @@ class FixedTabActivity : AppCompatActivity() {
             override fun createIndicator(): KDTabIndicator? {
                 return KDRecIndicator(tab0).apply {
                     indicatorHeight = 4f
-                    color = 0xffff5722.toInt()
+                    startColor = 0xffFF4343.toInt()
+                    endColor = 0x00FF7444.toInt()
                     mode = KDRecIndicator.MODE_MATCH
                     endInterpolator = DecelerateInterpolator(2f)
                 }

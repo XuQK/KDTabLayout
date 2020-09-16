@@ -1,9 +1,6 @@
 package github.xuqk.kdtablayout.widget.indicator
 
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.RectF
+import android.graphics.*
 import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
 import androidx.annotation.ColorInt
@@ -19,7 +16,7 @@ import github.xuqk.kdtablayout.widget.KDTabIndicator
  * Creator Email：xuqiankun66@gmail.com
  * Description：矩形Indicator
  */
-class KDRecIndicator(tabLayout: KDTabLayout) : KDTabIndicator(tabLayout) {
+open class KDRecIndicator(tabLayout: KDTabLayout) : KDTabIndicator(tabLayout) {
 
     companion object {
         /**
@@ -37,9 +34,9 @@ class KDRecIndicator(tabLayout: KDTabLayout) : KDTabIndicator(tabLayout) {
         const val MODE_WRAP_CONTENT = 2
     }
 
-    private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private val rect = RectF()
-    private val context = tabLayout.context
+    protected val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    protected val rect = RectF()
+    protected val context = tabLayout.context
 
     // ----------供用户自定义的属性 START
     /**
@@ -108,8 +105,21 @@ class KDRecIndicator(tabLayout: KDTabLayout) : KDTabIndicator(tabLayout) {
     var color: Int = Color.BLACK
         set(value) {
             field = value
-            paint.color = field
+            startColor = field
+            endColor = field
         }
+
+    /**
+     * 渐变色start
+     */
+    @field:ColorInt
+    var startColor: Int = Color.BLACK
+
+    /**
+     * 渐变色end
+     */
+    @field:ColorInt
+    var endColor: Int = Color.BLACK
 
     var startInterpolator: Interpolator = LinearInterpolator()
     var endInterpolator: Interpolator = LinearInterpolator()
@@ -209,6 +219,16 @@ class KDRecIndicator(tabLayout: KDTabLayout) : KDTabIndicator(tabLayout) {
     }
 
     override fun draw(canvas: Canvas) {
+        val y = (rect.bottom - rect.top) / 2
+        paint.shader = LinearGradient(
+            rect.left,
+            y,
+            rect.right,
+            y,
+            startColor,
+            endColor,
+            Shader.TileMode.CLAMP
+        )
         canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint)
     }
 

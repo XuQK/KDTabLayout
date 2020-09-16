@@ -281,6 +281,7 @@ class KDTabLayout @JvmOverloads constructor(
         when (ev.action) {
             MotionEvent.ACTION_DOWN -> {
                 lastX = ev.rawX
+                parent?.requestDisallowInterceptTouchEvent(true)
                 if (!scroller.isFinished) {
                     scroller.abortAnimation()
                     return true

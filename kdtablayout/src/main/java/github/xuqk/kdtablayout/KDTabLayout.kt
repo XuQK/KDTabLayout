@@ -129,19 +129,22 @@ class KDTabLayout @JvmOverloads constructor(
     fun setCurrentItem(position: Int, smooth: Boolean = true) {
         if (currentItem == position || scrollState != SCROLL_STATE_IDLE) return
 
-        val startItem = currentItem
-
-        val view = getChildAt(startItem)
-        val destX = getTabScrollXInCenter(view)
-
         if (smooth) {
             smoothScrollToItem(position)
         } else {
-            scrollTo(destX)
-            updateTabState(position)
+            scrollToItem(position)
         }
 
         currentItem = position
+    }
+
+    private fun scrollToItem(position: Int) {
+        // 在该方法作用域里用来记录startPosition
+        val tempStartPosition = currentItem
+        currentItem = position
+
+        updateTabState(currentItem)
+        syncIndicatorScrollState(tempStartPosition, position, 1f)
     }
 
     private fun smoothScrollToItem(position: Int) {

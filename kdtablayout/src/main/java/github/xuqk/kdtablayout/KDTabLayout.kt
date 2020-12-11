@@ -200,11 +200,13 @@ class KDTabLayout @JvmOverloads constructor(
     }
 
     fun init() {
+        removeAllViews()
         contentAdapter?.let { adapter ->
             if (adapter.getTabCount() <= 0) {
-                throw IllegalArgumentException("数量必须大于0")
+                indicator = null
+                return@let
             }
-            removeAllViews()
+
             if (currentItem > adapter.getTabCount() - 1) {
                 currentItem = adapter.getTabCount() - 1
             }

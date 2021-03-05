@@ -5,14 +5,10 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Typeface
-import android.graphics.fonts.FontFamily
-import android.widget.TextView
 import androidx.annotation.ColorInt
-import github.xuqk.kdtablayout.KDTabLayout
 import github.xuqk.kdtablayout.dpToPx
 import github.xuqk.kdtablayout.getBaselineToCenter
 import github.xuqk.kdtablayout.widget.KDTab
-import kotlin.math.max
 
 /**
  * Created By：XuQK
@@ -86,7 +82,8 @@ open class KDSizeMorphingTextTab(context: Context, text: String) :
     }
 
     override fun computeContentBounds() {
-        paint.getTextBounds(text, 0, text.length, contentRect)
+        setPaintParam()
+
         val contentWidth = contentRect.width()
         val contentHeight = contentRect.height()
         contentRect.left = left + (width - contentWidth) / 2
@@ -96,8 +93,8 @@ open class KDSizeMorphingTextTab(context: Context, text: String) :
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        paint.textSize = dpToPx(context, max(selectedTextSize, normalTextSize)).toFloat()
-        paint.typeface = if (bold) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
+        setPaintParam()
+
         val w = paint.measureText(text) + dpToPx(context, horizontalPadding) * 2
         setMeasuredDimension(
             resolveSizeAndState(w.toInt(), widthMeasureSpec, 0),
@@ -106,15 +103,19 @@ open class KDSizeMorphingTextTab(context: Context, text: String) :
     }
 
     override fun drawContent(canvas: Canvas) {
+        setPaintParam()
+
+        paint.getFontMetrics(fontMetrics)
+        val baselineY = fontMetrics.getBaselineToCenter() + height / 2
+        canvas.drawText(text, (width / 2).toFloat(), baselineY, paint)
+    }
+
+    protected open fun setPaintParam() {
         paint.reset()
         paint.isAntiAlias = true
         paint.textSize = dpToPx(context, textSize).toFloat()
         paint.color = textColor
         paint.typeface = if (bold) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
         paint.textAlign = Paint.Align.CENTER
-        paint.getFontMetrics(fontMetrics)
-
-        val baselineY = fontMetrics.getBaselineToCenter() + height / 2
-        canvas.drawText(text, (width / 2).toFloat(), baselineY, paint)
     }
 }

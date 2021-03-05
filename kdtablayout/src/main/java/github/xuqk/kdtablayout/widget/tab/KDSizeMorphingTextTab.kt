@@ -47,6 +47,7 @@ open class KDSizeMorphingTextTab(context: Context, text: String) :
             if (field != value) {
                 field = value
                 requestLayout()
+                postInvalidate()
             }
         }
 

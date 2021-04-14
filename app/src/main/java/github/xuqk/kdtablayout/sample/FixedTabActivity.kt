@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import github.xuqk.kdtablayout.KDTabAdapter
 import github.xuqk.kdtablayout.KDTabLayout
 import github.xuqk.kdtablayout.sample.adapter.ViewPagerAdapter
+import github.xuqk.kdtablayout.sample.widget.TextViewTab
 import github.xuqk.kdtablayout.widget.KDTab
 import github.xuqk.kdtablayout.widget.KDTabIndicator
 import github.xuqk.kdtablayout.widget.indicator.KDRecIndicator
@@ -113,9 +114,25 @@ class FixedTabActivity : AppCompatActivity() {
             }
         }
 
+        tab3.tabMode = KDTabLayout.TAB_MODE_SPREAD
+        tab3.contentAdapter = object : KDTabAdapter() {
+            override fun createTab(position: Int): KDTab? {
+                return TextViewTab(this@FixedTabActivity, data[position]).apply {
+                    setOnClickListener {
+                        vp.currentItem = position
+                    }
+                }
+            }
+
+            override fun getTabCount(): Int {
+                return data.size
+            }
+        }
+
         tab0.setViewPager(vp)
         tab1.setViewPager(vp)
         tab2.setViewPager(vp)
+        tab3.setViewPager(vp)
         vp.adapter = ViewPagerAdapter(data.toMutableList())
     }
 }

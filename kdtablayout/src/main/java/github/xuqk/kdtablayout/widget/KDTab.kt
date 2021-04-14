@@ -3,6 +3,9 @@ package github.xuqk.kdtablayout.widget
 import android.content.Context
 import android.graphics.*
 import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.ScrollView
 
 /**
  * Created By：XuQK
@@ -11,7 +14,7 @@ import android.view.View
  * Description：
  */
 abstract class KDTab(
-    context: Context) : View(context) {
+    context: Context) : FrameLayout(context) {
 
     protected val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     /**
@@ -32,6 +35,18 @@ abstract class KDTab(
     /**单位dp*/
     var horizontalPadding: Float = 0f
     // ------供用户自定义的属性 END
+
+    init {
+        setWillNotDraw(false)
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        setMeasuredDimension(
+            widthMeasureSpec,
+            MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(heightMeasureSpec), MeasureSpec.AT_MOST)
+        )
+    }
 
     /**
      * @param selectedFraction 该Tab被选中的比例，即滚动完成度

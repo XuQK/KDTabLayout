@@ -27,6 +27,8 @@ open class KDSizeMorphingTextTab(context: Context, text: String) :
     var selectedTextSize: Float = 16f
     /**单位dp*/
     var normalTextSize: Float = 16f
+    // 是否随字体尺寸变化调整tab尺寸
+    var resizeWithFontSize: Boolean = false
     var selectedBold: Boolean = false
     @ColorInt
     var selectedTextColor: Int = 0xFFFFFFFF.toInt()
@@ -61,7 +63,7 @@ open class KDSizeMorphingTextTab(context: Context, text: String) :
             bold = selectedFraction > 0.5f
         }
         textSize = (selectedTextSize - normalTextSize) * selectedFraction + normalTextSize
-        if (selectedTextSize != normalTextSize) {
+        if (resizeWithFontSize && selectedTextSize != normalTextSize) {
             requestLayout()
         }
     }

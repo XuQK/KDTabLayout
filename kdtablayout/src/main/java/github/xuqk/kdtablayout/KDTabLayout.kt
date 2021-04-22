@@ -430,7 +430,9 @@ class KDTabLayout @JvmOverloads constructor(
             width += child.measuredWidth
         }
         scrollable = r - l < width
-        indicator?.init()
+        if (changed) {
+            indicator?.init()
+        }
     }
 
     override fun onScrolling(scrollFraction: Float, startItem: Int, endItem: Int) {

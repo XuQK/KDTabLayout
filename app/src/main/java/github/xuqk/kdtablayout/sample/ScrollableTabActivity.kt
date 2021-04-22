@@ -77,6 +77,9 @@ class ScrollableTabActivity : AppCompatActivity() {
                     horizontalPadding = 16f
                     selectedTextColor = Color.parseColor("#ff5722")
                     normalTextColor = Color.parseColor("#9e9e9e")
+                    selectedTextSize = 32f
+                    normalTextSize = 16f
+                    resizeWithFontSize = true
                     setOnClickListener {
                         vp2.currentItem = position
                     }

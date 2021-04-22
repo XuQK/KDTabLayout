@@ -61,6 +61,9 @@ open class KDSizeMorphingTextTab(context: Context, text: String) :
             bold = selectedFraction > 0.5f
         }
         textSize = (selectedTextSize - normalTextSize) * selectedFraction + normalTextSize
+        if (selectedTextSize != normalTextSize) {
+            requestLayout()
+        }
     }
 
     /**

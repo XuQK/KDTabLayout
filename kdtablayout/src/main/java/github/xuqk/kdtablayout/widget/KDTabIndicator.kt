@@ -37,4 +37,8 @@ abstract class KDTabIndicator(protected val tabLayout: KDTabLayout) {
      * 此方法在且仅在Indicator单独使用时需要实现
      */
     open fun getHeight(): Int = 0
+
+    fun postInvalidate() {
+        tabLayout.postInvalidate()
+    }
 }

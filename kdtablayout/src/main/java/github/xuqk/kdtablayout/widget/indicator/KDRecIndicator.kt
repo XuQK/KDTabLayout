@@ -127,6 +127,7 @@ open class KDRecIndicator(tabLayout: KDTabLayout) : KDTabIndicator(tabLayout) {
 
     override fun init() {
         onTabScrolled(tabLayout.currentItem, tabLayout.currentItem, 0f)
+        postInvalidate()
     }
 
     override fun onTabScrolled(startItem: Int, endItem: Int, scrolledFraction: Float) {

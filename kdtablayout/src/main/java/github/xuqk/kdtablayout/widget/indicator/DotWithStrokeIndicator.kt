@@ -51,6 +51,8 @@ class DotWithStrokeIndicator(tabLayout: KDTabLayout) : KDTabIndicator(tabLayout)
         dotY = tabLayout.height / 2f
 
         onTabScrolled(tabLayout.currentItem, tabLayout.currentItem, 0f)
+
+        postInvalidate()
     }
 
     override fun onTabScrolled(startItem: Int, endItem: Int, scrolledFraction: Float) {

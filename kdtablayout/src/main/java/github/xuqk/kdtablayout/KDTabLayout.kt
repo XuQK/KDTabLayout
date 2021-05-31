@@ -235,7 +235,9 @@ class KDTabLayout @JvmOverloads constructor(
                 throw IllegalArgumentException("tab和indicator不能都不设置")
             }
 
-            indicator?.init()
+            post {
+                indicator?.init()
+            }
         }
     }
 

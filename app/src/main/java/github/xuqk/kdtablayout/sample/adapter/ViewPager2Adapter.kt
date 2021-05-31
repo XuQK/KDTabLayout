@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import github.xuqk.kdtablayout.sample.ZH
 
 /**
  * Created By：XuQK

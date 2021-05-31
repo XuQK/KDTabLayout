@@ -2,13 +2,10 @@ package github.xuqk.kdtablayout.sample.widget
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Typeface
 import android.view.Gravity
-import android.widget.FrameLayout
 import android.widget.TextView
 import github.xuqk.kdtablayout.widget.KDTab
-import github.xuqk.kdtablayout.widget.tab.KDColorMorphingTextTab
 
 /**
  * Created By：XuQK

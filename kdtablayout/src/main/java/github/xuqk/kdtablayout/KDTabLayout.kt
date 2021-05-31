@@ -104,13 +104,13 @@ class KDTabLayout @JvmOverloads constructor(
         private set
 
     private var stopViewPagerAffect: Boolean = true
-    private var indicator: KDTabIndicator? = null
+    var indicator: KDTabIndicator? = null
+        private set
     private var tabChangeAnimator: ValueAnimator? = null
 
     private val vpHelper: KDViewPagerHelper by lazy { KDViewPagerHelper() }
 
-    private var scrollState: Int =
-        SCROLL_STATE_IDLE
+    private var scrollState: Int = SCROLL_STATE_IDLE
 
     fun setViewPager(viewPager: ViewPager) {
         stopViewPagerAffect = false

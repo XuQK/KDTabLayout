@@ -4,12 +4,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import github.xuqk.kdtablayout.KDTabAdapter
 import github.xuqk.kdtablayout.sample.adapter.ViewPager2Adapter
-import github.xuqk.kdtablayout.widget.indicator.DotWithStrokeIndicator
+import github.xuqk.kdtablayout.sample.databinding.ActivityOnlyIndicatorBinding
 import github.xuqk.kdtablayout.widget.KDTab
 import github.xuqk.kdtablayout.widget.KDTabIndicator
 import github.xuqk.kdtablayout.widget.indicator.DotMorphingIndicator
+import github.xuqk.kdtablayout.widget.indicator.DotWithStrokeIndicator
 import github.xuqk.kdtablayout.widget.indicator.KDRecIndicator
-import kotlinx.android.synthetic.main.activity_only_indicator.*
 
 /**
  * Created By：XuQK
@@ -19,19 +19,22 @@ import kotlinx.android.synthetic.main.activity_only_indicator.*
  */
 class OnlyIndicatorActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityOnlyIndicatorBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_only_indicator)
+        binding = ActivityOnlyIndicatorBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val data = ZH
 
-        tab0.contentAdapter = object : KDTabAdapter() {
+        binding.tab0.contentAdapter = object : KDTabAdapter() {
             override fun createTab(position: Int): KDTab? {
                 return null
             }
 
             override fun createIndicator(): KDTabIndicator? {
-                return KDRecIndicator(tab0).apply {
+                return KDRecIndicator(binding.tab0).apply {
                     indicatorHeight = 4f
                     color = 0xffff5722.toInt()
                     mode = KDRecIndicator.MODE_MATCH
@@ -43,13 +46,13 @@ class OnlyIndicatorActivity : AppCompatActivity() {
             }
         }
 
-        tab1.contentAdapter = object : KDTabAdapter() {
+        binding.tab1.contentAdapter = object : KDTabAdapter() {
             override fun createTab(position: Int): KDTab? {
                 return null
             }
 
             override fun createIndicator(): KDTabIndicator? {
-                return DotWithStrokeIndicator(tab1)
+                return DotWithStrokeIndicator(binding.tab1)
                     .apply {
                     strokeWidth = 2f
                 }
@@ -60,13 +63,13 @@ class OnlyIndicatorActivity : AppCompatActivity() {
             }
         }
 
-        tab2.contentAdapter = object : KDTabAdapter() {
+        binding.tab2.contentAdapter = object : KDTabAdapter() {
             override fun createTab(position: Int): KDTab? {
                 return null
             }
 
             override fun createIndicator(): KDTabIndicator? {
-                return DotMorphingIndicator(tab2)
+                return DotMorphingIndicator(binding.tab2)
             }
 
             override fun getTabCount(): Int {
@@ -74,9 +77,9 @@ class OnlyIndicatorActivity : AppCompatActivity() {
             }
         }
 
-        tab0.setViewPager2(vp2)
-        tab1.setViewPager2(vp2)
-        tab2.setViewPager2(vp2)
-        vp2.adapter = ViewPager2Adapter(data.toMutableList())
+        binding.tab0.setViewPager2(binding.vp2)
+        binding.tab1.setViewPager2(binding.vp2)
+        binding.tab2.setViewPager2(binding.vp2)
+        binding.vp2.adapter = ViewPager2Adapter(data.toMutableList())
     }
 }

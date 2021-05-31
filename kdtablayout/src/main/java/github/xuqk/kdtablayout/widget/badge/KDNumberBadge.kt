@@ -1,7 +1,6 @@
 package github.xuqk.kdtablayout.widget.badge
 
 import android.animation.ValueAnimator
-import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import androidx.annotation.ColorInt

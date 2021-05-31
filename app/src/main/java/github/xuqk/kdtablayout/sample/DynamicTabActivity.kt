@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import github.xuqk.kdtablayout.KDTabAdapter
 import github.xuqk.kdtablayout.sample.adapter.ViewPager2Adapter
+import github.xuqk.kdtablayout.sample.databinding.ActivityDynamicTabBinding
 import github.xuqk.kdtablayout.widget.KDTab
 import github.xuqk.kdtablayout.widget.KDTabIndicator
 import github.xuqk.kdtablayout.widget.indicator.KDRecIndicator
 import github.xuqk.kdtablayout.widget.tab.KDColorClipTextTab
-import kotlinx.android.synthetic.main.activity_dynamic_tab.*
 import java.util.*
 
 /**
@@ -19,30 +19,33 @@ import java.util.*
  */
 class DynamicTabActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityDynamicTabBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dynamic_tab)
+        binding = ActivityDynamicTabBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val data = mutableListOf<String>()
         data.addAll(ZH)
 
-        vp2.adapter = ViewPager2Adapter(data)
+        binding.vp2.adapter = ViewPager2Adapter(data)
 
-        tab.setViewPager2(vp2)
-        tab.contentAdapter = object : KDTabAdapter() {
+        binding.tab.setViewPager2(binding.vp2)
+        binding.tab.contentAdapter = object : KDTabAdapter() {
             override fun createTab(position: Int): KDTab? {
                 return KDColorClipTextTab(this@DynamicTabActivity, data[position]).apply {
                     horizontalPadding = 16f
                     selectedTextSize = 22f
                     normalTextSize = 16f
                     setOnClickListener {
-                        vp2.currentItem = position
+                        binding.vp2.currentItem = position
                     }
                 }
             }
 
             override fun createIndicator(): KDTabIndicator? {
-                return KDRecIndicator(tab).apply {
+                return KDRecIndicator(binding.tab).apply {
                     indicatorHeight = 4f
                     color = 0x4cff0000
                     marginBottom = 4f
@@ -56,15 +59,15 @@ class DynamicTabActivity : AppCompatActivity() {
             }
         }
 
-        btn.setOnClickListener {
+        binding.btn.setOnClickListener {
             var n = Random().nextInt(ZH.size + 1)
             if (n == 0) n = ZH.size
             val newData = ZH.copyOfRange(0, n)
             data.clear()
             data.addAll(newData)
 
-            vp2.adapter!!.notifyDataSetChanged()
-            tab.init()
+            binding.vp2.adapter!!.notifyDataSetChanged()
+            binding.tab.init()
         }
     }
 }

@@ -1,47 +1,50 @@
 package github.xuqk.kdtablayout.sample
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.appcompat.app.AppCompatActivity
+import github.xuqk.kdtablayout.sample.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        btn_scrollable_tab.setOnClickListener {
+        binding.btnScrollableTab.setOnClickListener {
             startActivity(
                 Intent(this, ScrollableTabActivity::class.java)
             )
         }
 
-        btn_fixed_tab.setOnClickListener {
+        binding.btnFixedTab.setOnClickListener {
             startActivity(
                 Intent(this, FixedTabActivity::class.java)
             )
         }
 
-        btn_dynamic_tab.setOnClickListener {
+        binding.btnDynamicTab.setOnClickListener {
             startActivity(
                 Intent(this, DynamicTabActivity::class.java)
             )
         }
 
-        btn_only_indicator_tab.setOnClickListener {
+        binding.btnOnlyIndicatorTab.setOnClickListener {
             startActivity(
                 Intent(this, OnlyIndicatorActivity::class.java)
             )
         }
 
-        btn_badge_tab.setOnClickListener {
+        binding.btnBadgeTab.setOnClickListener {
             startActivity(
                 Intent(this, BadgeTabActivity::class.java)
             )
         }
 
-        btn_custom_tab.setOnClickListener {
+        binding.btnCustomTab.setOnClickListener {
             startActivity(
                 Intent(this, CustomTabActivity::class.java)
             )

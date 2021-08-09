@@ -4,6 +4,8 @@ import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
+import android.os.Bundle
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.*
 import android.widget.OverScroller
@@ -66,6 +68,8 @@ class KDTabLayout @JvmOverloads constructor(
         const val TAB_MODE_FLEXIBLE = 3
     }
 
+    private var savedBundle: Bundle? = null
+
     // 所有子Tab宽度之和
     private var totalWidth: Int = 0
     private var scrollable: Boolean = false
@@ -73,7 +77,7 @@ class KDTabLayout @JvmOverloads constructor(
     // 由于Tab只管横向滑动，所以滑动只记录x坐标即可
     private var lastX: Float = 0f
 
-    private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
+    private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop / 2
     private val overScrollDistance = dpToPx(context, 16f)
     private val scroller = OverScroller(context)
     private var velocityTracker: VelocityTracker? = null
@@ -435,6 +439,12 @@ class KDTabLayout @JvmOverloads constructor(
         if (changed) {
             indicator?.init()
         }
+
+        savedBundle?.let {
+            updateTabState(it.getInt("currentItem"))
+            post { scrollTo(it.getInt("scrollX")) }
+        }
+        savedBundle = null
     }
 
     override fun onScrolling(scrollFraction: Float, startItem: Int, endItem: Int) {
@@ -541,6 +551,26 @@ class KDTabLayout @JvmOverloads constructor(
             0
         } else {
             tab.left - (width - tab.width) / 2 - scrollBiasX.toInt()
+        }
+    }
+
+    override fun onSaveInstanceState(): Parcelable {
+        savedBundle = null
+        val bundle = Bundle()
+        val superData = super.onSaveInstanceState()
+        bundle.putParcelable("superData", superData)
+        bundle.putInt("currentItem", currentItem)
+        bundle.putInt("scrollX", scrollX)
+        return bundle
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        val bundle = state as? Bundle
+        if (bundle == null) {
+            super.onRestoreInstanceState(state)
+        } else {
+            savedBundle = bundle
+            super.onRestoreInstanceState(bundle.getParcelable("superData"))
         }
     }
 }

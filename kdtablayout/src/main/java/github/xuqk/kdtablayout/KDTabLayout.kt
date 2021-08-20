@@ -91,10 +91,12 @@ class KDTabLayout @JvmOverloads constructor(
             field = dpToPx(context, value).toFloat()
         }
     var tabMode: Int = TAB_MODE_FLEXIBLE
+
+    /**平滑滚动动画时间*/
+    var smoothScrollDuration: Long = DEFAULT_DURATION
     /**
      * 为true，从tab2直接滚动到tab10，滚动开始后，会瞬间切到tab2，然后动画滚动到tab10，中间的tab也会对滚动进行响应
      * 为false，从tab2直接滚动到tab10，滚动开始后，会从当前停留的点，直接动画滚动到tab10，中间的tab不会对滚动进行响应，变化只发生在tab2和tab10上
-
      * 如果Tab数量很多且可滚动，建议将此项设置为false体验稍好一些
      */
     var needCompleteScroll: Boolean = false
@@ -167,7 +169,7 @@ class KDTabLayout @JvmOverloads constructor(
         val startScrollX = scrollX
 
         tabChangeAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
-            duration = DEFAULT_DURATION
+            duration = this@KDTabLayout.smoothScrollDuration
             interpolator = LinearOutSlowInInterpolator()
             addListener(object : Animator.AnimatorListener {
                 override fun onAnimationRepeat(animation: Animator?) {}
@@ -255,7 +257,7 @@ class KDTabLayout @JvmOverloads constructor(
 
     fun smoothScrollBy(x: Int) {
         if (!scrollable) return
-        scroller.startScroll(scrollX, 0, x, 0, DEFAULT_DURATION.toInt())
+        scroller.startScroll(scrollX, 0, x, 0, smoothScrollDuration.toInt())
         postInvalidateOnAnimation()
     }
 
@@ -266,7 +268,7 @@ class KDTabLayout @JvmOverloads constructor(
             destX > totalWidth - width -> totalWidth - width - scrollX
             else -> destX - scrollX
         }
-        scroller.startScroll(scrollX, 0, dx, 0, DEFAULT_DURATION.toInt())
+        scroller.startScroll(scrollX, 0, dx, 0, smoothScrollDuration.toInt())
         postInvalidateOnAnimation()
     }
 

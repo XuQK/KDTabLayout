@@ -133,7 +133,7 @@ class KDTabLayout @JvmOverloads constructor(
     }
 
     fun setCurrentItem(position: Int, smooth: Boolean = true) {
-        if (currentItem == position || scrollState != SCROLL_STATE_IDLE) return
+        if (currentItem == position) return
 
         if (smooth) {
             smoothScrollToItem(position)

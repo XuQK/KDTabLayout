@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="github.xuqk.kdtablayout.sample.MainActivity"
+        <activity
+            android:name="github.xuqk.kdtablayout.sample.MainActivity"
+            android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,12 +20,24 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ScrollableTabActivity"/>
-        <activity android:name=".FixedTabActivity"/>
-        <activity android:name=".DynamicTabActivity"/>
-        <activity android:name=".OnlyIndicatorActivity"/>
-        <activity android:name=".BadgeTabActivity"/>
-        <activity android:name=".CustomTabActivity"/>
+        <activity
+            android:name=".ScrollableTabActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FixedTabActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DynamicTabActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OnlyIndicatorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BadgeTabActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CustomTabActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

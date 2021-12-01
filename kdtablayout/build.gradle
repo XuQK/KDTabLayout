@@ -34,7 +34,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.github.XuQK'
                 artifactId = 'KDTabLayout'
-                version = '1.1.6'
+//                version = '1.1.6'
             }
         }
     }

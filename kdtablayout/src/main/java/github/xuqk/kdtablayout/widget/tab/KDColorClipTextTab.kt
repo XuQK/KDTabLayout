@@ -3,9 +3,6 @@ package github.xuqk.kdtablayout.widget.tab
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Typeface
-import github.xuqk.kdtablayout.dpToPx
 
 /**
  * Created By：XuQK
@@ -19,6 +16,10 @@ class KDColorClipTextTab(context: Context, text: String) :
 
     private var selectedFraction: Float = 0f
     private var selectedInLeft: Boolean = false
+
+    init {
+        this.text = text
+    }
 
     override fun onScrolling(selectedFraction: Float, selectedInLeft: Boolean) {
         super.onScrolling(selectedFraction, selectedInLeft)
@@ -37,10 +38,8 @@ class KDColorClipTextTab(context: Context, text: String) :
     }
 
     override fun drawContent(canvas: Canvas) {
-        paint.isFakeBoldText = true
-        paint.textSize = dpToPx(context, textSize).toFloat()
-        paint.typeface = if (bold) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
-        paint.textAlign = Paint.Align.CENTER
+        setPaintParam()
+
         paint.getFontMetrics(fontMetrics)
         val baseLine = (fontMetrics.descent - fontMetrics.ascent) / 2 + height / 2 - fontMetrics.descent
 

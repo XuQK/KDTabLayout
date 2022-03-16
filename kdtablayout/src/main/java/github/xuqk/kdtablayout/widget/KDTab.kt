@@ -12,8 +12,7 @@ import android.widget.FrameLayout
  * Creator Email：xuqiankun66@gmail.com
  * Description：
  */
-abstract class KDTab(
-    context: Context) : FrameLayout(context) {
+abstract class KDTab(context: Context) : FrameLayout(context) {
 
     protected val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     /**
@@ -36,7 +35,7 @@ abstract class KDTab(
     // ------供用户自定义的属性 END
 
     init {
-        setWillNotDraw(false)
+        this.setWillNotDraw(false)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

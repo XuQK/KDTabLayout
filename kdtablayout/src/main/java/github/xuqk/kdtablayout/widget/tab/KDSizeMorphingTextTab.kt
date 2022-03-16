@@ -88,6 +88,7 @@ open class KDSizeMorphingTextTab(context: Context, text: String) :
 
     override fun computeContentBounds() {
         setPaintParam()
+        paint.getTextBounds(text, 0, text.length, contentRect)
 
         val contentWidth = contentRect.width()
         val contentHeight = contentRect.height()

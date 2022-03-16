@@ -16,6 +16,10 @@ open class KDColorMorphingTextTab(context: Context, text: String) :
 
     private val hsvEvaluator = HsvEvaluator()
 
+    init {
+        this.text = text
+    }
+
     override fun onScrolling(selectedFraction: Float, selectedInLeft: Boolean) {
         super.onScrolling(selectedFraction, selectedInLeft)
         textColor = hsvEvaluator.evaluate(selectedFraction, normalTextColor, selectedTextColor)

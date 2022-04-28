@@ -472,9 +472,8 @@ class KDTabLayout @JvmOverloads constructor(
             SCROLL_STATE_IDLE -> {
                 if (stopViewPagerAffect) {
                     stopViewPagerAffect = false
-                } else {
-                    updateTabState(currentItem)
                 }
+                updateTabState(currentItem)
             }
             SCROLL_STATE_DRAGGING -> tabChangeAnimator?.cancel()
             SCROLL_STATE_SETTLING -> {

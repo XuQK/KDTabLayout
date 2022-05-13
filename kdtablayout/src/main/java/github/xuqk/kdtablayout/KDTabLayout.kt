@@ -510,6 +510,7 @@ class KDTabLayout @JvmOverloads constructor(
             child.invalidate()
         }
         this.currentItem = currentItem
+        syncIndicatorScrollState(currentItem, currentItem, 1f)
     }
 
     private fun syncTabScrollState(startTab: View, endTab: View, fraction: Float) {

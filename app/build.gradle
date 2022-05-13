@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
+    namespace 'github.xuqk.kdtablayout.sample'
     compileSdkVersion 32
     defaultConfig {
         applicationId "github.xuqk.kdtablayout.demo"
